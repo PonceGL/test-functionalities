@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {HomeProps} from '../interfaces/StackScreenProps';
+
+//Components
 import {
   SafeAreaView,
   ScrollView,
@@ -8,49 +12,105 @@ import {
   TouchableOpacity,
   View,
   useColorScheme,
+  Modal,
+  StatusBarStyle,
+  Platform,
 } from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Section from '../Components/Section';
+import MidleModal from '../Components/Modal/Midle';
 
-const Home = ({navigation}): JSX.Element => {
+const Home = ({navigation}: HomeProps): JSX.Element => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  interface Return {
+    color: string;
+    style: StatusBarStyle;
+  }
+  const getStatusBarProperties = (): Return => {
+    let color: string = Colors.black;
+    let style: StatusBarStyle = 'light-content';
+
+    if (modalVisible) {
+      color = '#57C5B6';
+      style = 'light-content';
+    } else {
+      if (isDarkMode) {
+        color = Colors.black;
+        style = 'light-content';
+      } else {
+        color = Colors.white;
+        style = 'dark-content';
+      }
+    }
+
+    return {color, style};
+  };
+
   return (
-    <SafeAreaView style={[styles.content, backgroundStyle]}>
+    <>
+      <Modal
+        animationType="slide"
+        hardwareAccelerated={true}
+        transparent={Platform.OS === 'android'}
+        visible={modalVisible}
+        presentationStyle={
+          Platform.OS === 'android' ? 'overFullScreen' : 'formSheet'
+        }
+        statusBarTranslucent={false}
+        onRequestClose={() => {
+          setModalVisible(false);
+        }}>
+        <MidleModal setModalVisible={setModalVisible} />
+      </Modal>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={isDarkMode ? Colors.black : Colors.white}
+        animated={true}
+        backgroundColor={getStatusBarProperties().color}
+        barStyle={getStatusBarProperties().style}
+        showHideTransition="slide"
+        hidden={false}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        {/* <Header /> */}
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Cámara">
+      <SafeAreaView style={[styles.content, backgroundStyle]}>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={backgroundStyle}>
+          {/* <Header /> */}
+          <View
+            style={{
+              backgroundColor: isDarkMode ? Colors.black : Colors.white,
+            }}>
             <TouchableOpacity onPress={() => navigation.navigate('Camera')}>
-              <Text
-                style={{
-                  color: !isDarkMode ? Colors.darker : Colors.lighter,
-                }}>
-                En esta sección vamos a aprobar la cámara y sus resultados
-              </Text>
+              <Section title="Cámara">
+                <Text
+                  style={{
+                    color: !isDarkMode ? Colors.darker : Colors.lighter,
+                  }}>
+                  En esta sección vamos a aprobar la cámara y sus resultados
+                </Text>
+              </Section>
             </TouchableOpacity>
-          </Section>
-          <Section title="See Your Changes"></Section>
-          <Section title="Debug"></Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            <TouchableOpacity onPress={() => navigation.navigate('Modal')}>
+              <Section title="ModalScreen">
+                <Text
+                  style={{
+                    color: !isDarkMode ? Colors.darker : Colors.lighter,
+                  }}>
+                  Esta sección es para probar las diferentes formas de
+                  presentation
+                </Text>
+              </Section>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <Section title="Modal de React Native" />
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };
 

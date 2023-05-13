@@ -3,8 +3,9 @@ import {
   ImagePickerResponse,
   ErrorCode,
   CameraOptions,
+  launchImageLibrary,
 } from 'react-native-image-picker';
-import {PermissionsAndroid, Platform, ToastAndroid} from 'react-native';
+import {Alert, PermissionsAndroid, Platform, ToastAndroid} from 'react-native';
 
 const requestPermission = async () => {
   const permission = PermissionsAndroid.PERMISSIONS.CAMERA;
@@ -21,46 +22,95 @@ const requestPermission = async () => {
   }
 };
 
+const options: CameraOptions = {
+  mediaType: 'photo',
+  includeExtra: true,
+  quality: 0.9,
+  maxWidth: 2000,
+  maxHeight: 2000,
+  saveToPhotos: false,
+  cameraType: 'back',
+  presentationStyle: 'fullScreen',
+};
+
 const handleError = (err: ErrorCode | unknown) => {
   console.log('Error on launchCamera');
-  console.log(err);
+  if (err === 'permission') {
+    Alert.alert('Permiso de la cámara fue denegado por el usuario.');
+  }
+
+  if (err === 'camera_unavailable') {
+    Alert.alert('La camara no está disponible.');
+  }
+
+  if (err === 'others') {
+    Alert.alert('Ocurrió un error.');
+  }
 };
 
 const handleSucces = async (response: ImagePickerResponse) => {
   console.log('====================================');
-  console.log('handleSucces response');
-  console.log(response);
+  console.log('handleSucces');
   console.log('====================================');
+
+  if (response.errorCode === 'permission') {
+    handleError(response.errorCode);
+  }
+
+  if (!response.didCancel) {
+    console.log('====================================');
+    console.log('handleSucces response');
+    console.log(response.assets);
+    console.log('====================================');
+  }
 };
 
 export async function handleCamera() {
+  console.log('handleCamera');
+
   if (Platform.OS === 'android') {
     const granted = await requestPermission();
 
-    if (granted) {
-      const options: CameraOptions = {
-        mediaType: 'photo',
-        includeExtra: true,
-        quality: 0.9,
-        maxWidth: 2000,
-        maxHeight: 2000,
-        saveToPhotos: false,
-        cameraType: 'front',
-        presentationStyle: 'fullScreen',
-      };
-
-      try {
-        const result = await launchCamera(options);
-
-        handleSucces(result);
-      } catch (e) {
-        handleError(e);
+    if (!granted) {
+      if (Platform.OS === 'android') {
+        ToastAndroid.show(
+          'Permiso de la cámara fue denegado por el usuario.',
+          ToastAndroid.LONG,
+        );
       }
-    } else {
-      ToastAndroid.show(
-        'Permiso de localización denegado por el usuario. \n Se usará la ciudad del contrato!',
-        ToastAndroid.LONG,
-      );
     }
+  }
+
+  try {
+    const result = await launchCamera(options);
+
+    handleSucces(result);
+  } catch (e) {
+    handleError(e);
+  }
+}
+
+export async function handleGallery() {
+  console.log('handleGallery');
+
+  if (Platform.OS === 'android') {
+    const granted = await requestPermission();
+
+    if (!granted) {
+      if (Platform.OS === 'android') {
+        ToastAndroid.show(
+          'Permiso de galería fue denegado por el usuario.',
+          ToastAndroid.LONG,
+        );
+      }
+    }
+  }
+
+  try {
+    const result = await launchImageLibrary(options);
+
+    handleSucces(result);
+  } catch (e) {
+    handleError(e);
   }
 }

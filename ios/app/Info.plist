@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>app</string>
+	<string>Functionalities</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -35,8 +35,20 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string> Al permitir acceso, podrás agregar fácilmente fotos a tu perfil y a tus solicitudes.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Al permitir acceso, podrás guardar fotos relacionadas con tus solicitudes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Al permitir acceso, podrás agregar fácilmente fotos a tu perfil y a tus solicitudes.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

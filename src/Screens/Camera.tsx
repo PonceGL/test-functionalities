@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+// import {CameraScreenProps} from '../interfaces/StackScreenProps';
 
 import {
   BackHandler,
@@ -11,33 +12,35 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 import Section from '../Components/Section';
-import Button from '../Components/Camera/Button';
+import CameraButton from '../Components/Camera/Button';
+import GalleryButton from '../Components/Gallery/Button';
 
-const Camera = ({navigation}): JSX.Element => {
+const Camera = (): JSX.Element => {
+  // const Camera = ({navigation}: CameraScreenProps): JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const backAction = () => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    } else {
-      navigation.navigate('Home');
-    }
+  // const backAction = () => {
+  //   if (navigation.canGoBack()) {
+  //     navigation.goBack();
+  //   } else {
+  //     navigation.navigate('Home');
+  //   }
 
-    return true;
-  };
+  //   return true;
+  // };
 
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
+  // useEffect(() => {
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     backAction,
+  //   );
 
-    return () => backHandler.remove();
-  }, []);
+  //   return () => backHandler.remove();
+  // }, []);
 
   return (
     <SafeAreaView style={[styles.content, backgroundStyle]}>
@@ -49,7 +52,13 @@ const Camera = ({navigation}): JSX.Element => {
         En esta sección vamos a aprobar la cámara y sus resultados
       </Section>
       <View style={styles.buttonContainer}>
-        <Button />
+        <CameraButton />
+      </View>
+      <Section title="Galería">
+        En esta sección vamos a aprobar la galería y sus resultados
+      </Section>
+      <View style={styles.buttonContainer}>
+        <GalleryButton />
       </View>
     </SafeAreaView>
   );
