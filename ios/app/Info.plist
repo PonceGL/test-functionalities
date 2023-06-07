@@ -38,13 +38,13 @@
 	<key>NSCameraUsageDescription</key>
 	<string> Al permitir acceso, podrás agregar fácilmente fotos a tu perfil y a tus solicitudes.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda.</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda y mostrarte los puntos de atención más cercanos.</string>
+	<string>Tu ubicación será utilizada para mejorar los resultados de búsqueda.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Al permitir acceso, podrás guardar fotos relacionadas con tus solicitudes.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -6,6 +6,7 @@ import {
   launchImageLibrary,
 } from 'react-native-image-picker';
 import {Alert, PermissionsAndroid, Platform, ToastAndroid} from 'react-native';
+import {Image} from '../interfaces/Assests';
 
 const requestPermission = async () => {
   const permission = PermissionsAndroid.PERMISSIONS.CAMERA;
@@ -31,6 +32,7 @@ const options: CameraOptions = {
   saveToPhotos: false,
   cameraType: 'back',
   presentationStyle: 'fullScreen',
+  includeBase64: true,
 };
 
 const handleError = (err: ErrorCode | unknown) => {
@@ -46,28 +48,25 @@ const handleError = (err: ErrorCode | unknown) => {
   if (err === 'others') {
     Alert.alert('Ocurrió un error.');
   }
+
+  throw new Error(String(err) || 'others');
 };
 
-const handleSucces = async (response: ImagePickerResponse) => {
-  console.log('====================================');
-  console.log('handleSucces');
-  console.log('====================================');
-
+const handleSucces = (response: ImagePickerResponse) => {
   if (response.errorCode === 'permission') {
     handleError(response.errorCode);
   }
 
-  if (!response.didCancel) {
-    console.log('====================================');
-    console.log('handleSucces response');
-    console.log(response.assets);
-    console.log('====================================');
+  if (!response?.didCancel) {
+    if (Array.isArray(response.assets)) {
+      return response.assets;
+    } else {
+      handleError(response.errorCode || 'others');
+    }
   }
 };
 
-export async function handleCamera() {
-  console.log('handleCamera');
-
+export async function handleCamera(): Promise<Image[] | undefined> {
   if (Platform.OS === 'android') {
     const granted = await requestPermission();
 
@@ -84,7 +83,8 @@ export async function handleCamera() {
   try {
     const result = await launchCamera(options);
 
-    handleSucces(result);
+    const assets = handleSucces(result);
+    return assets;
   } catch (e) {
     handleError(e);
   }
@@ -109,7 +109,8 @@ export async function handleGallery() {
   try {
     const result = await launchImageLibrary(options);
 
-    handleSucces(result);
+    const assets = handleSucces(result);
+    return assets;
   } catch (e) {
     handleError(e);
   }

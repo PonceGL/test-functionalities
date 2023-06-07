@@ -1,13 +1,17 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, useColorScheme} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {handleCamera} from '../../util/handleCamera';
 
-const Button = () => {
+interface Props {
+  textButton: string;
+  functionButton: () => void;
+}
+
+const SimpleButton = ({textButton, functionButton}: Props): JSX.Element => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <TouchableOpacity
-      onPress={() => handleCamera()}
+      onPress={functionButton}
       style={[
         styles.button,
         {
@@ -21,13 +25,13 @@ const Button = () => {
             color: !isDarkMode ? Colors.darker : Colors.lighter,
           },
         ]}>
-        Button
+        {textButton}
       </Text>
     </TouchableOpacity>
   );
 };
 
-export default Button;
+export default SimpleButton;
 
 const styles = StyleSheet.create({
   button: {
