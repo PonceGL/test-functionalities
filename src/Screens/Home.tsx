@@ -13,7 +13,6 @@ import {
   View,
   useColorScheme,
   Modal,
-  StatusBarStyle,
   Platform,
 } from 'react-native';
 import Section from '../Components/Section';
@@ -25,30 +24,6 @@ const Home = ({navigation}: HomeProps): JSX.Element => {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  interface Return {
-    color: string;
-    style: StatusBarStyle;
-  }
-  const getStatusBarProperties = (): Return => {
-    let color: string = Colors.black;
-    let style: StatusBarStyle = 'light-content';
-
-    if (modalVisible) {
-      color = '#57C5B5';
-      style = 'light-content';
-    } else {
-      if (isDarkMode) {
-        color = Colors.black;
-        style = 'light-content';
-      } else {
-        color = Colors.white;
-        style = 'dark-content';
-      }
-    }
-
-    return {color, style};
   };
 
   return (
@@ -69,8 +44,8 @@ const Home = ({navigation}: HomeProps): JSX.Element => {
       </Modal>
       <StatusBar
         animated={true}
-        backgroundColor={getStatusBarProperties().color}
-        barStyle={getStatusBarProperties().style}
+        backgroundColor={isDarkMode ? Colors.darker : Colors.lighter}
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         showHideTransition="slide"
         hidden={false}
       />
@@ -79,10 +54,7 @@ const Home = ({navigation}: HomeProps): JSX.Element => {
           contentInsetAdjustmentBehavior="automatic"
           style={backgroundStyle}>
           {/* <Header /> */}
-          <View
-            style={{
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
-            }}>
+          <View>
             <TouchableOpacity onPress={() => navigation.navigate('Camera')}>
               <Section title="Cámara">
                 <Text
@@ -93,6 +65,7 @@ const Home = ({navigation}: HomeProps): JSX.Element => {
                 </Text>
               </Section>
             </TouchableOpacity>
+
             <TouchableOpacity onPress={() => navigation.navigate('Modal')}>
               <Section title="ModalScreen">
                 <Text
@@ -104,8 +77,21 @@ const Home = ({navigation}: HomeProps): JSX.Element => {
                 </Text>
               </Section>
             </TouchableOpacity>
+
             <TouchableOpacity onPress={() => setModalVisible(true)}>
               <Section title="Modal de React Native" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigation.navigate('Location')}>
+              <Section title="Ubicación">
+                <Text
+                  style={{
+                    color: !isDarkMode ? Colors.darker : Colors.lighter,
+                  }}>
+                  Esta sección es para probar formas de acceder a la ubicacíon
+                  del usuario
+                </Text>
+              </Section>
             </TouchableOpacity>
           </View>
         </ScrollView>

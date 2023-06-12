@@ -5,11 +5,11 @@ import {Image as ImageType} from '../../../interfaces/Assests';
 
 interface Props extends ImageType {}
 
-const Item = ({fileName, base64}: Props) => {
+const Item = ({fileName, uri}: Props) => {
   return (
     <Image
       source={{
-        uri: `data:image/png;base64,${base64}}`,
+        uri: uri,
       }}
       alt={fileName}
       resizeMode="cover"

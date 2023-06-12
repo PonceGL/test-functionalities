@@ -6,6 +6,7 @@ import {RootStackParamList} from '../interfaces/RootStackParamList';
 import Home from '../Screens/Home';
 import Camera from '../Screens/Camera';
 import Modal from '../Screens/Modal';
+import Location from '../Screens/Location';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,6 +27,7 @@ export function NavigatorNativeStack() {
           presentation: 'modal', // modal
         }}
       />
+      <Stack.Screen name="Location" component={Location} />
     </Stack.Navigator>
   );
 }

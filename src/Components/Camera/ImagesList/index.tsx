@@ -10,6 +10,10 @@ interface Props {
 }
 
 const ImagesList = ({images}: Props): JSX.Element => {
+  console.log('====================================');
+  console.log('ImagesList images => ');
+  console.log(images);
+  console.log('====================================');
   return (
     <FlatList
       data={images}

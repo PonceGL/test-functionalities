@@ -24,8 +24,8 @@ const Camera = (): JSX.Element => {
   return (
     <SafeAreaView style={[styles.content, backgroundStyle]}>
       <StatusBar
+        backgroundColor={isDarkMode ? Colors.darker : Colors.lighter}
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={isDarkMode ? Colors.black : Colors.white}
       />
       <Photo
         style={styles.buttonContainer}
