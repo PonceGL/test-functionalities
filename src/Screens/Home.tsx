@@ -36,7 +36,7 @@ const Home = ({navigation}: HomeProps): JSX.Element => {
     let style: StatusBarStyle = 'light-content';
 
     if (modalVisible) {
-      color = '#57C5B6';
+      color = '#57C5B5';
       style = 'light-content';
     } else {
       if (isDarkMode) {
